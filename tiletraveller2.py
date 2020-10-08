@@ -3,6 +3,7 @@ NORTH = 'n'
 EAST = 'e'
 SOUTH = 's'
 WEST = 'w'
+LEVER = [(1,2), (2,2), (2,3), (3,2)]
 
 def move(direction, col, row):
     ''' Returns updated col, row given the direction '''
@@ -71,16 +72,28 @@ def play_one_move(col, row, valid_directions):
         victory = is_victory(col, row)
     return victory, col, row
 
+def pull_lever(col, row, coin_total):
+    if (col,row) in LEVER:
+        pull_lever = input("Pull a lever (y/n): ").lower()
+        if pull_lever == "y":
+            coin_total += 1
+            print("You received 1 coin, your total is now {}.". format(coin_total))
+    return coin_total
+
+
+
 # The main program starts here
 victory = False
 row = 1
 col = 1
+coin_total = 0
 
 while not victory:
     valid_directions = find_directions(col, row)
+    pull = pull_lever(col, row, coin_total) 
+    coin_total = pull 
     print_directions(valid_directions)
     victory, col, row = play_one_move(col, row, valid_directions)
-print("Victory!")
+print("Victory! Total coins {}.".format(coin_total))
 
 
-print("hello world")
