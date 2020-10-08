@@ -80,19 +80,21 @@ def pull_lever(col, row, coin_total):
             coin_total += 1
             print("You received 1 coin, your total is now {}.". format(coin_total))
     return coin_total
+ 
+def play_game():
+    victory = False
+    row = 1
+    col = 1
+    coin_total = 0
 
+    while not victory:
+        valid_directions = find_directions(col, row)
+        print_directions(valid_directions)
+        victory, col, row, coin_total = play_one_move(col, row, valid_directions, coin_total)
+    print("Victory! Total coins {}.".format(coin_total))
 
-
-# The main program starts here
-victory = False
-row = 1
-col = 1
-coin_total = 0
-
-while not victory:
-    valid_directions = find_directions(col, row)
-    print_directions(valid_directions)
-    victory, col, row, coin_total = play_one_move(col, row, valid_directions, coin_total)
-print("Victory! Total coins {}.".format(coin_total))
-
-
+play_game()
+play_again = input("Play again (y/n): ").lower()
+while play_again == 'y':
+    play_game()
+    play_again = input("Play again (y/n): ").lower()
